@@ -40,6 +40,8 @@ const words = [
   "monitor"
 ]
 const hintH2 = document.querySelector("#h2")
+const displayWord = document.querySelector("#displayWord");
+
 
 let cpuChoice = Math.floor(Math.random() * 10)
 
@@ -77,6 +79,7 @@ if(word === "gravity"){
 }
 hintH2.textContent = hint
 }
+displayWord.textContent = answer.join(" ");
 
 
 
