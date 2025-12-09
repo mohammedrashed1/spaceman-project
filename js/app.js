@@ -1,3 +1,32 @@
+const alphabetLtrs = [
+	'A',
+	'B',
+	'C',
+	'D',
+	'E',
+	'F',
+	'G',
+	'H',
+	'I',
+	'J',
+	'K',
+	'L',
+	'M',
+	'N',
+	'O',
+	'P',
+	'Q',
+	'R',
+	'S',
+	'T',
+	'U',
+	'V',
+	'W',
+	'X',
+	'Y',
+	'Z',
+]
+
 const words = [
   "gravity",
   "station",
@@ -18,33 +47,42 @@ let word = words[cpuChoice]
 
 let letters = word.split("")
 
-let hint;
+let hint ;
 
-let answer = [];
+let answer = Array(word.length).fill("_")
+console.log(answer)
+console.log(letters)
 
 function discerption(){
 if(word === "gravity"){
-    hint = "The force that pulls objects toward the ground"
+    hint = "Hint: The force that pulls objects toward the ground"
 } else if(word === "station"){
-    hint = "A place where people or trains stop"
+    hint = "Hint: A place where people or trains stop"
 } else if(word === "rocket"){
-    hint = "Something that flies fast into space"
+    hint = "Hint: Something that flies fast into space"
 } else if(word === "galaxy"){
-    hint = "A huge group of stars and planets"
+    hint = "Hint: A huge group of stars and planets"
 } else if(word === "diamond"){
-    hint = "A shiny, valuable gemstone"
+    hint = "Hint: A shiny, valuable gemstone"
 } else if(word === "sunrise"){
-    hint = "When the sun rises in the morning"
+    hint = "Hint: When the sun rises in the morning"
 } else if(word === "electric"){
-    hint = "Something that works with electricity"
+    hint = "Hint: Something that works with electricity"
 } else if(word === "journey"){
-    hint = "A long trip or adventure"
+    hint = "Hint: A long trip or adventure"
 } else if(word === "picture"){
-    hint = "An image or a photo you can see"
+    hint = "Hint: An image or a photo you can see"
 } else if(word === "monitor"){
-    hint = "A screen used for a computer or watching things"
+    hint = "Hint: A screen used for a computer or watching things"
 }
 hintH2.textContent = hint
 }
+
+
+
+
+
+console.log(word)
+discerption()
 
 
