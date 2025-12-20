@@ -1,32 +1,3 @@
-const alphabetLtrs = [
-	'A',
-	'B',
-	'C',
-	'D',
-	'E',
-	'F',
-	'G',
-	'H',
-	'I',
-	'J',
-	'K',
-	'L',
-	'M',
-	'N',
-	'O',
-	'P',
-	'Q',
-	'R',
-	'S',
-	'T',
-	'U',
-	'V',
-	'W',
-	'X',
-	'Y',
-	'Z',
-]
-
 const words = [
   "GRAVITY",
   "STATION",
@@ -42,6 +13,10 @@ const words = [
 const hintH2 = document.querySelector("#h2")
 const displayWord = document.querySelector("#displayWord");
 const keys = document.querySelectorAll(".key")
+const result = document.querySelector("#winlose")
+const wrongCount = document.querySelector("#wrongCount");
+
+let wrong = 0;
 
 let cpuChoice = Math.floor(Math.random() * 10)
 
@@ -49,7 +24,7 @@ let word = words[cpuChoice]
 
 let letters = word.split("")
 
-let hint ;
+let hint;
 
 let answer = Array(word.length).fill("_")
 console.log(answer)
@@ -86,26 +61,36 @@ function checkAnswer() {
       const letter = button.textContent;
 
       if (letters.includes(letter)) {
-        console.log("Correct Select");
+        result.textContent = "Correct select"
 
         letters.forEach((ltr, index) => {
           if (ltr === letter) {
-            answer[index] = letter;
+            answer[index] = letter
           }
-        });
+        })
 
         displayWord.textContent = answer.join(" ");
       } else {
-        console.log("Wrong Select");
+        result.textContent = "Wrong select"
+        wrong++;
+        wrongCount.textContent = `Wrong guesses: ${wrong}`;
+
       }
 
-      button.disabled = true;
-    });
-  });
+      button.disabled = true
+      checkWinLose()
+    })
+  })
+  
+}
+function checkWinLose(){
+if (!answer.includes("_")) {
+  result.textContent = "You Win 🎉"
+  keys.forEach(btn => btn.disabled = true)
+}
 }
 
-
-displayWord.textContent = answer.join(" ");
+displayWord.textContent = answer.join(" ")
 
 
 
@@ -114,4 +99,3 @@ displayWord.textContent = answer.join(" ");
 console.log(word)
 discerption()
 checkAnswer()
-
