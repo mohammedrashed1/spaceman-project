@@ -11,91 +11,85 @@ const words = [
   "MONITOR"
 ]
 const hintH2 = document.querySelector("#h2")
-const displayWord = document.querySelector("#displayWord");
+const displayWord = document.querySelector("#displayWord")
 const keys = document.querySelectorAll(".key")
 const result = document.querySelector("#winlose")
-const wrongCount = document.querySelector("#wrongCount");
+const wrongCount = document.querySelector("#wrongCount")
+const resetBtn = document.querySelector("#resetBtn")
+const nextBtn = document.querySelector("#nextBtn")
 
-let wrong = 0;
-
-let cpuChoice = Math.floor(Math.random() * 10)
-
-let word = words[cpuChoice]
-
-let letters = word.split("")
-
-let hint;
-
-let answer = Array(word.length).fill("_")
-console.log(answer)
-console.log(letters)
+let wrong = 0
+let cpuChoice
+let word
+let letters
+let answer
 
 function discerption(){
-if(word === "GRAVITY"){
-    hint = "Hint: The force that pulls objects toward the ground"
-} else if(word === "STATION"){
-    hint = "Hint: A place where people or trains stop"
-} else if(word === "ROCKET"){
-    hint = "Hint: Something that flies fast into space"
-} else if(word === "GALAXY"){
-    hint = "Hint: A huge group of stars and planets"
-} else if(word === "DIAMOND"){
-    hint = "Hint: A shiny, valuable gemstone"
-} else if(word === "SUNRISE"){
-    hint = "Hint: When the sun rises in the morning"
-} else if(word === "ELECTRIC"){
-    hint = "Hint: Something that works with electricity"
-} else if(word === "JOURNEY"){
-    hint = "Hint: A long trip or adventure"
-} else if(word === "PICTURE"){
-    hint = "Hint: An image or a photo you can see"
-} else if(word === "MONITOR"){
-    hint = "Hint: A screen used for a computer or watching things"
+  const hints = {
+    GRAVITY: "Hint: The force that pulls objects toward the ground",
+    STATION: "Hint: A place where people or trains stop",
+    ROCKET: "Hint: Something that flies fast into space",
+    GALAXY: "Hint: A huge group of stars and planets",
+    DIAMOND: "Hint: A shiny, valuable gemstone",
+    SUNRISE: "Hint: When the sun rises in the morning",
+    ELECTRIC: "Hint: Something that works with electricity",
+    JOURNEY: "Hint: A long trip or adventure",
+    PICTURE: "Hint: An image or a photo you can see",
+    MONITOR: "Hint: A screen used for a computer or watching things"
+  }
+  hintH2.textContent = hints[word]
 }
-hintH2.textContent = hint
+
+function initGame(){
+  wrong = 0
+  wrongCount.textContent = "Wrong guesses: 0"
+  result.textContent = ""
+  cpuChoice = Math.floor(Math.random() * words.length)
+  word = words[cpuChoice]
+  letters = word.split("")
+  answer = Array(word.length).fill("_")
+  displayWord.textContent = answer.join(" ")
+  discerption()
+  keys.forEach(btn => btn.disabled = false)
+  nextBtn.disabled = true
 }
 
 function checkAnswer() {
   keys.forEach(button => {
     button.addEventListener("click", () => {
-      const letter = button.textContent;
-
-      if (letters.includes(letter)) {
+      const letter = button.textContent
+      if (letters.includes(letter)){
         result.textContent = "Correct select"
-
-        letters.forEach((ltr, index) => {
-          if (ltr === letter) {
-            answer[index] = letter
-          }
+        letters.forEach((ltr,index)=>{
+          if(ltr===letter) answer[index]=letter
         })
-
-        displayWord.textContent = answer.join(" ");
+        displayWord.textContent = answer.join(" ")
       } else {
+        wrong++
+        wrongCount.textContent = `Wrong guesses: ${wrong}`
         result.textContent = "Wrong select"
-        wrong++;
-        wrongCount.textContent = `Wrong guesses: ${wrong}`;
-
+        if(wrong===6){
+          result.textContent="You Lose ❌"
+          keys.forEach(btn=>btn.disabled=true)
+          nextBtn.disabled=false
+        }
       }
-
       button.disabled = true
       checkWinLose()
     })
   })
-  
 }
+
 function checkWinLose(){
-if (!answer.includes("_")) {
-  result.textContent = "You Win 🎉"
-  keys.forEach(btn => btn.disabled = true)
+  if(!answer.includes("_")){
+    result.textContent="You Win 🎉"
+    keys.forEach(btn=>btn.disabled=true)
+    nextBtn.disabled=false
+  }
 }
-}
 
-displayWord.textContent = answer.join(" ")
+resetBtn.addEventListener("click", initGame)
+nextBtn.addEventListener("click", initGame)
 
-
-
-
-
-console.log(word)
-discerption()
+initGame()
 checkAnswer()
